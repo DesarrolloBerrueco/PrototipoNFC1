@@ -1,0 +1,112 @@
+<!--
+  ~ Copyright (c) 2020. BoostTag E.I.R.L. Romell D.Z.
+  ~ All rights reserved
+  ~ porfile.romellfudi.com
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:baselineAligned="true"
+                app:srcCompat="@drawable/controlaforo" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="118dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:baselineAligned="false"
+                android:text="Dni:"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/dniText"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:inputType="textEmailAddress" />
+
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:baselineAligned="false"
+                android:text="Fecha Entrada:"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/fechaEntradaText"
+                android:layout_width="fill_parent"
+                android:layout_height="48dp"
+                android:inputType="phone" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:baselineAligned="false"
+                android:text="Fecha Salida"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/fechaSalidaText"
+                android:layout_width="fill_parent"
+                android:layout_height="48dp"
+                android:inputType="phone" />
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+            <Button
+                android:id="@+id/recordButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:text="@string/btn_write_tag"
+                android:textColor="#FFFFFF"
+                android:shadowColor="@color/black"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                />
+
+            <Button
+                android:id="@+id/readButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:shadowColor="@color/black"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:text="@string/btn_read_tag"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

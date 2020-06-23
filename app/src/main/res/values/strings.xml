@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<resources>
+
+    <string name="app_name">Norber NFC</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="btn_write_tag">Grabar Etiqueta</string>
+    <string name="btn_read_tag">Leer Etiqueta</string>
+    <string name="bluetooth_not_present_exception">Bluetooth is not supported by this device!</string>
+    <string name="title_activity_nfc">NfcActivity</string>
+    <string name="btn_write_email_nfc">Write email</string>
+
+    <string name="btn_write_sms_text">Write an SMS</string>
+    <string name="btn_write_geolocation_nfc_text">Write Geolocation</string>
+    <string name="btn_write_uri_nfc_text">Write URI</string>
+    <string name="btn_write_tel_nfc_text">Write Tel</string>
+    <string name="btn_write_bluetooth_nfc_text">Write Bluetooth MAC</string>
+    <string name="progressdialog_waiting_for_tag">Waiting for tag…</string>
+    <string name="progressdialog_waiting_for_tag_message">Tap tag to write…</string>
+    <string name="no_input">You should give me something to write</string>
+
+</resources>

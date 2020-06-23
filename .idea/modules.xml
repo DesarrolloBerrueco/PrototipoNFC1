@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FudiNFC-master.iml" filepath="$PROJECT_DIR$/.idea/modules/FudiNFC-master.iml" group="FudiNFC-master" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/FudiNFC-master-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/FudiNFC-master-app.iml" group="FudiNFC-master/app" />
+      <module fileurl="file://$PROJECT_DIR$/android-nfc-lib.iml" filepath="$PROJECT_DIR$/android-nfc-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fudi-nfc/com.romellfudi.fudinfc-fudi-nfc.iml" filepath="$PROJECT_DIR$/.idea/modules/fudi-nfc/com.romellfudi.fudinfc-fudi-nfc.iml" group="FudiNFC-master/fudi-nfc" />
+      <module fileurl="file://$PROJECT_DIR$/fudi-nfc/fudi-nfc.iml" filepath="$PROJECT_DIR$/fudi-nfc/fudi-nfc.iml" />
+    </modules>
+  </component>
+</project>
