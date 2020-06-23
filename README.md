@@ -1,4 +1,4 @@
-# Fudi NFC
+# Lector NFC
 
 [![Platform](https://img.shields.io/badge/platform-android-brightgreen.svg)](https://developer.android.com/index.html)
 [![API](https://img.shields.io/badge/API-19%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=19)
@@ -6,8 +6,6 @@
 [![Bintray](https://img.shields.io/bintray/v/romllz489/maven/fudi-nfc.svg)](https://bintray.com/romllz489/maven/fudi-nfc) 
 [![Jitpack](https://jitpack.io/v/romellfudi/FudiNFC.svg)](https://jitpack.io/#romellfudi/FudiNFC)
 [![](https://img.shields.io/badge/language-ES-blue.svg)](./)
-
-`latestVersion` is ![](https://img.shields.io/bintray/v/romllz489/maven/fudi-nfc.svg)
 
 Add the following in your app's `build.gradle` file:
 
