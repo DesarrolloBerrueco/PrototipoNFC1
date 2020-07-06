@@ -232,7 +232,7 @@ public class MainActivityV2 extends AppCompatActivity {
                 .withListener(new PermissionListener() {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                        String jsonData = new UserRepository(MainActivityV2.this).getEntryLogJson();
+                        String jsonData = new UserRepository(MainActivityV2.this).getTablesJson();
                         //showPopupMsg(jsonData);
                         File downloadsFolder = getExternalCacheDir();
                         File jsonFile = createFileFromJson(jsonData, downloadsFolder);

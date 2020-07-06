@@ -96,8 +96,12 @@ class UserRepository(context: Context) {
             editPrefs.commit()
         }
 
-    val entryLogJson: String
-        get() =  preferences!!.getString(KEY_ENTRY_LOG_TABLE, "") ?: ""
+    val tablesJson: String
+        get() {
+            val userJson = preferences!!.getString(KEY_USER_TABLE, "") ?: ""
+            val logJson = preferences!!.getString(KEY_ENTRY_LOG_TABLE, "") ?: ""
+            return userJson + "\n\n" + logJson
+        }
 
     fun insertLog(nfcId: String, type: EntryType) {
         //TODO careful timestamp is working in GMT, should work with UTC which is more consistent
