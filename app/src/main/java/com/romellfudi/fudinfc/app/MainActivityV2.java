@@ -1,8 +1,10 @@
 package com.romellfudi.fudinfc.app;
 
+import android.Manifest;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.tech.IsoDep;
 import android.nfc.tech.MifareClassic;
@@ -13,6 +15,8 @@ import android.nfc.tech.NfcB;
 import android.nfc.tech.NfcF;
 import android.nfc.tech.NfcV;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,16 +27,27 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 import com.romellfudi.fudinfc.app.data.EntryType;
 import com.romellfudi.fudinfc.app.data.NfcEntryLog;
 import com.romellfudi.fudinfc.app.data.NfcUser;
 import com.romellfudi.fudinfc.app.data.UserRepository;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Calendar;
+
 public class MainActivityV2 extends AppCompatActivity {
 
     // list of NFC technologies detected:
-    private final String[][] techList = new String[][] {
-            new String[] {
+    private final String[][] techList = new String[][]{
+            new String[]{
                     NfcA.class.getName(),
                     NfcB.class.getName(),
                     NfcF.class.getName(),
@@ -51,6 +66,7 @@ public class MainActivityV2 extends AppCompatActivity {
     private EditText etNfcId = null;
     private Button btnSimulateNfc = null;
     private TextView tvLastLogValue = null;
+    private Button btnExportData = null;
 
     private String lastNfcId = "";
 
@@ -105,6 +121,7 @@ public class MainActivityV2 extends AppCompatActivity {
         etNfcId = findViewById(R.id.et_nfc_id);
         btnSimulateNfc = findViewById(R.id.btn_simulate_nfc);
         tvLastLogValue = findViewById(R.id.tv_last_log_value);
+        btnExportData = findViewById(R.id.btn_export_data);
     }
 
     private void setListeners() {
@@ -112,7 +129,7 @@ public class MainActivityV2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String nfcId = etNfcId.getText().toString().trim();
-                if(!nfcId.isEmpty()) {
+                if (!nfcId.isEmpty()) {
                     etNfcId.setText("");
                     onNfcScan(nfcId);
                 } else {
@@ -124,9 +141,9 @@ public class MainActivityV2 extends AppCompatActivity {
         btnCreateUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!lastNfcId.trim().isEmpty()) {
+                if (!lastNfcId.trim().isEmpty()) {
                     String dni = etDni.getText().toString().trim();
-                    if(Utils.isValidDni(dni)) {
+                    if (Utils.isValidDni(dni)) {
                         UserRepository repository = new UserRepository(MainActivityV2.this);
                         NfcUser user = new NfcUser(lastNfcId, dni);
                         repository.replaceUser(user);
@@ -142,16 +159,23 @@ public class MainActivityV2 extends AppCompatActivity {
                 }
             }
         });
+
+        btnExportData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exportEntryLogData();
+            }
+        });
     }
 
     /*
-    * IMPORTANT method
-    * */
+     * IMPORTANT method
+     * */
     private void onNfcScan(String nfcId) {
         lastNfcId = nfcId;
         UserRepository repository = new UserRepository(this);
         NfcUser user = repository.getUserById(nfcId);
-        if(user == null) {
+        if (user == null) {
             showPopupMsg("Usuario no creado, introduzca el DNI, cree el usuario y vuelva a escanear el NFC");
             //End execution early
             return;
@@ -160,9 +184,9 @@ public class MainActivityV2 extends AppCompatActivity {
         //User is already created... Create NfcEntryLog...
         //TODO should control if user doesn't have last Entry.IN don't allow Entry.OUT?? and viceversa? to ensure pairing IN <-> OUT....
         EntryType type = null;
-        if(rgType.getCheckedRadioButtonId() == R.id.rb_entrada) {
+        if (rgType.getCheckedRadioButtonId() == R.id.rb_entrada) {
             type = EntryType.IN;
-        } else if(rgType.getCheckedRadioButtonId() == R.id.rb_salida) {
+        } else if (rgType.getCheckedRadioButtonId() == R.id.rb_salida) {
             type = EntryType.OUT;
         } else {
             throw new IllegalStateException("Expected to always have a checked radio button...");
@@ -173,7 +197,7 @@ public class MainActivityV2 extends AppCompatActivity {
 
     private void paintLastLog() {
         NfcEntryLog lastLog = new UserRepository(this).getLastLog();
-        if(lastLog != null) {
+        if (lastLog != null) {
             tvLastLogValue.setText(lastLog.getPrettyPrint());
         } else {
             tvLastLogValue.setText("...");
@@ -184,13 +208,12 @@ public class MainActivityV2 extends AppCompatActivity {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
-    private String ByteArrayToHexString(byte [] inarray) {
+    private String ByteArrayToHexString(byte[] inarray) {
         int i, j, in;
-        String [] hex = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"};
-        String out= "";
+        String[] hex = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
+        String out = "";
 
-        for(j = 0 ; j < inarray.length ; ++j)
-        {
+        for (j = 0; j < inarray.length; ++j) {
             in = (int) inarray[j] & 0xff;
             i = (in >> 4) & 0x0f;
             out += hex[i];
@@ -200,4 +223,65 @@ public class MainActivityV2 extends AppCompatActivity {
         return out;
     }
 
+    private void exportEntryLogData() {
+        //Request permission to write to external storage to export jsonData using library
+        //https://github.com/Karumi/Dexter
+        //https://developer.android.com/training/permissions/requesting
+        Dexter.withContext(this)
+                .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                        String jsonData = new UserRepository(MainActivityV2.this).getEntryLogJson();
+                        //showPopupMsg(jsonData);
+                        File downloadsFolder = getExternalCacheDir();
+                        File jsonFile = createFileFromJson(jsonData, downloadsFolder);
+                        shareFile(jsonFile);
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+
+                    }
+                })
+                .check();
+    }
+
+    private File createFileFromJson(String json, File folder) {
+        FileWriter file = null;
+        String fileName = "export_fichajes_" + Calendar.getInstance().getTime().getTime() + ".json";
+        try {
+            // Constructs a FileWriter given a file name, using the platform's default charset
+            file = new FileWriter(new File(folder, fileName));
+            file.write(json);
+            //showPopupMsg("Datos exportados correctamente en la carpeta: " + folder);
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                file.flush();
+                file.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return new File(folder, fileName);
+    }
+
+    private void shareFile(File file) {
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+
+        final Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("*/*");
+        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+        startActivity(Intent.createChooser(shareIntent, "Enviar datos exportados a ..."));
+    }
 }

@@ -1,6 +1,10 @@
 package com.romellfudi.fudinfc.app;
 
-class Utils {
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+public class Utils {
 
     public static boolean isValidDni(String dni){
         char[] dniLetters = {
@@ -70,5 +74,11 @@ class Utils {
         }
 
         return true;
+    }
+
+    public static String formatTimestamp(long timestamp) {
+        String pattern = "dd/MM/yyyy HH:mm:ss";
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.getDefault());
+        return sdf.format(new Date(timestamp));
     }
 }

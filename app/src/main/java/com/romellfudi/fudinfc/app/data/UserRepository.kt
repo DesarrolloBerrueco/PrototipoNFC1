@@ -96,6 +96,8 @@ class UserRepository(context: Context) {
             editPrefs.commit()
         }
 
+    val entryLogJson: String
+        get() =  preferences!!.getString(KEY_ENTRY_LOG_TABLE, "") ?: ""
 
     fun insertLog(nfcId: String, type: EntryType) {
         //TODO careful timestamp is working in GMT, should work with UTC which is more consistent
@@ -118,16 +120,13 @@ class UserRepository(context: Context) {
         return list.maxBy { it.timestamp }
     }
 
-    fun getLogsOrder(): List<NfcEntryLog> {
-
-       /* return entryLogList.sortedWith(object : Comparator<NfcEntryLog>{
-            override fun compare(p0: NfcEntryLog?, p1: NfcEntryLog?): Int {
-                TODO("Not yet implemented")
-                //si retorno 0 son iguales.
-            }
-        })*/
-
-        return entryLogList.sortedBy { it.timestamp }
+    fun getLogsSorted(): List<CompleteEntryLog> {
+        //Key-Value map of idNfc -> dni
+        val userMap = userList.map { it.nfcId to it.dni }.toMap()
+        val sortedLogs = entryLogList.sortedBy { it.timestamp }
+        return sortedLogs.map {
+            CompleteEntryLog(it, userMap[it.nfcId] ?: "...")
+        }
     }
 
     fun getAllLogs(): List<NfcEntryLog> {

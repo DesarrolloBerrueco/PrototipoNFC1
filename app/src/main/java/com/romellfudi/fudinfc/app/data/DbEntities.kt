@@ -1,7 +1,6 @@
 package com.romellfudi.fudinfc.app.data
 
-import java.text.SimpleDateFormat
-import java.util.*
+import com.romellfudi.fudinfc.app.Utils.formatTimestamp
 
 data class NfcUser(
         val nfcId: String,
@@ -20,15 +19,16 @@ data class NfcEntryLog(
 ) {
     val prettyPrint: String
         get() {
-            //TODO finish
             val typePrint = when(entryType) {
                 EntryType.IN -> "Entrada"
                 EntryType.OUT -> "Salida"
             }
-
-            val pattern = "dd/MM/yyyy HH:mm:ss"
-            val sdf = SimpleDateFormat(pattern, Locale.getDefault())
-            val timestampFormat = sdf.format(Date(timestamp))
-            return "$typePrint: $nfcId || $timestampFormat"
+            return "$typePrint: $nfcId || ${formatTimestamp(timestamp)}"
         }
 }
+
+data class CompleteEntryLog(
+        val log: NfcEntryLog,
+        val dni: String
+)
+

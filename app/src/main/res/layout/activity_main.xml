@@ -120,7 +120,8 @@
                 android:id="@+id/et_nfc_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="text"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/btn_simulate_nfc"
@@ -129,7 +130,8 @@
                 android:text="Simular NFC"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
-                style="@style/default_btn"/>
+                style="@style/default_btn"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tv_last_log_label"
@@ -180,6 +182,16 @@
                 android:text="Crear Usuario"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
+                style="@style/default_btn"/>
+
+
+            <Button
+                android:id="@+id/btn_export_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Exportar datos"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="48dp"
                 style="@style/default_btn"/>
 
 
