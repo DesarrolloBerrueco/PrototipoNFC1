@@ -6,7 +6,9 @@ import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.romellfudi.fudinfc.app.BuildConfig
+import com.romellfudi.fudinfc.util.async.Nfc
 import java.util.*
+import kotlin.Comparator
 
 class UserRepository(context: Context) {
 
@@ -114,6 +116,18 @@ class UserRepository(context: Context) {
     fun getLastLog(): NfcEntryLog? {
         val list = entryLogList.toMutableList()
         return list.maxBy { it.timestamp }
+    }
+
+    fun getLogsOrder(): List<NfcEntryLog> {
+
+       /* return entryLogList.sortedWith(object : Comparator<NfcEntryLog>{
+            override fun compare(p0: NfcEntryLog?, p1: NfcEntryLog?): Int {
+                TODO("Not yet implemented")
+                //si retorno 0 son iguales.
+            }
+        })*/
+
+        return entryLogList.sortedBy { it.timestamp }
     }
 
     fun getAllLogs(): List<NfcEntryLog> {

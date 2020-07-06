@@ -90,7 +90,7 @@ public class MainActivityV2 extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         if (intent.getAction().equals(NfcAdapter.ACTION_TAG_DISCOVERED)) {
-            String id = "NFC Tag\n" + ByteArrayToHexString(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID));
+            String id = ByteArrayToHexString(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID));
             Toast.makeText(this, id, Toast.LENGTH_LONG).show();
             onNfcScan(id);
         }
