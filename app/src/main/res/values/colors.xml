@@ -7,4 +7,14 @@
 
 <resources>
     <color name="splash">#f4f3f3</color>
+
+    <color name="colorPrimary">@color/black</color>
+    <color name="colorPrimaryDark">@color/black</color>
+    <color name="colorAccent">#3FAE2A</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="error_red">#D50000</color>
+    <color name="ok_green">#6aa84f</color>
 </resources>

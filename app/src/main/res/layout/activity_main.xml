@@ -7,9 +7,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context=".MainActivity">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".MainActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -40,7 +41,8 @@
                 android:text="Acerque la tarjeta al dispositivo para fichar la entrada / salida."
                 android:textSize="16sp" />
 
-            <RadioGroup
+            <!--TODO simple radioGroup impl-->
+            <!--<RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -58,7 +60,61 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Salida"/>
-            </RadioGroup>
+            </RadioGroup>-->
+
+            <!--Cool radioGroup impl ;)-->
+            <LinearLayout
+                android:id="@+id/ll_switch_mode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <RadioGroup
+                    android:id="@+id/rg_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="48dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="48dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/button_shape_stroke_rounded_accent"
+                    android:checkedButton="@+id/rb_entrada"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_entrada"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/toggle_widget_background"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="Entrada"
+                        android:textAllCaps="true"
+                        android:textColor="@drawable/switch_text_color" />
+
+                    <RadioButton
+                        android:id="@+id/rb_salida"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/toggle_widget_background"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="Salida"
+                        android:textAllCaps="true"
+                        android:textColor="@drawable/switch_text_color" />
+                </RadioGroup>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_last_log_label"
@@ -107,7 +163,8 @@
                 android:layout_height="wrap_content"
                 android:text="Crear Usuario"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="16dp"
+                style="@style/default_btn"/>
 
 
 

@@ -27,7 +27,7 @@ class UserRepository(context: Context) {
         get() {
             val json = preferences!!.getString(KEY_USER_TABLE, "") ?: ""
             return if(json.isBlank()) {
-                listOf()
+                listOf<NfcUser>()
             } else {
                 //Try to deserialize user list json
                 try {
@@ -35,7 +35,7 @@ class UserRepository(context: Context) {
                     list
                 } catch (e: Exception) {
                     Log.e(TAG, e.toString())
-                    listOf()
+                    listOf<NfcUser>()
                 }
             }
         }

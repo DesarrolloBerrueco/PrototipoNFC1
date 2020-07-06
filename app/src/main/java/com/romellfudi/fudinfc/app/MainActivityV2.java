@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class MainActivityV2 extends AppCompatActivity {
             }
     };
 
+    private RadioGroup rgType = null;
     private RadioButton rbEntrada = null;
     private RadioButton rbSalida = null;
     private EditText etDni = null;
@@ -86,6 +88,7 @@ public class MainActivityV2 extends AppCompatActivity {
     }
 
     private void bindViews() {
+        rgType = findViewById(R.id.rg_type);
         rbEntrada = findViewById(R.id.rb_entrada);
         rbSalida = findViewById(R.id.rb_salida);
         etDni = findViewById(R.id.et_dni);
