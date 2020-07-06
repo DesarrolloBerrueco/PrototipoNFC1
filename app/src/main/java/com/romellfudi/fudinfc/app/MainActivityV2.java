@@ -13,6 +13,9 @@ import android.nfc.tech.NfcB;
 import android.nfc.tech.NfcF;
 import android.nfc.tech.NfcV;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,10 +38,16 @@ public class MainActivityV2 extends AppCompatActivity {
             }
     };
 
+    private RadioButton rbEntrada = null;
+    private RadioButton rbSalida = null;
+    private EditText etDni = null;
+    private Button btnCreateUser = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        bindViews();
     }
 
     @Override
@@ -69,7 +78,23 @@ public class MainActivityV2 extends AppCompatActivity {
         if (intent.getAction().equals(NfcAdapter.ACTION_TAG_DISCOVERED)) {
             String id = "NFC Tag\n" + ByteArrayToHexString(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID));
             Toast.makeText(this, id, Toast.LENGTH_LONG).show();
+
+            //TODO findUser()
+            //  if user null -> msg to create user with dni+
+            //  else -> insertLog()...
         }
+    }
+
+    private void bindViews() {
+        rbEntrada = findViewById(R.id.rb_entrada);
+        rbSalida = findViewById(R.id.rb_salida);
+        etDni = findViewById(R.id.et_dni);
+        btnCreateUser = findViewById(R.id.btn_create_user);
+    }
+
+    private boolean validateForm() {
+
+        return false;
     }
 
     private String ByteArrayToHexString(byte [] inarray) {

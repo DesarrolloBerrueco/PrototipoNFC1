@@ -42,8 +42,8 @@ class MainActivity : NfcAct() {
         setContentView(R.layout.activity_main)
         splashy.show()
         recordButton.setOnClickListener {
-            if (dniText != null) {
-                val dnitext = dniText.text.toString()
+            if (et_dni != null) {
+                val dnitext = et_dni.text.toString()
                 val fechaentrada = fechaEntradaText.text.toString()
                 val fechasalida = fechaSalidaText.text.toString()
                 //NdefMessage ndefmessage = new NdefMessage

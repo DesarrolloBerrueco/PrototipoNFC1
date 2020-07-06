@@ -36,6 +36,7 @@ dependencies {
 //    implementation project(':fudi-nfc')
     implementation 'com.romellfudi.fudinfc:fudi-nfc:1.0.a'
 
+    implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.core:core-ktx:+"

@@ -32,6 +32,61 @@
                 app:srcCompat="@drawable/controlaforo" />
 
             <TextView
+                android:id="@+id/tv_hint_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:baselineAligned="false"
+                android:text="Acerque la tarjeta al dispositivo para fichar la entrada / salida."
+                android:textSize="16sp" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp">
+
+                <RadioButton
+                    android:id="@+id/rb_entrada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Entrada"
+                    android:checked="true"/>
+
+                <RadioButton
+                    android:id="@+id/rb_salida"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Salida"/>
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tv_last_log_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/black"
+                android:text="Último Fichaje"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_last_log_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="ENTRADA -> 12345678Z"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_hint_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:baselineAligned="false"
+                android:text="En caso de que sea la primera vez que se usa la tarjeta NFC, debe picar la tarjeta y asociarle un DNI para crear el usuario."
+                android:textSize="16sp" />
+
+            <TextView
                 android:id="@+id/textView"
                 android:layout_width="118dp"
                 android:layout_height="wrap_content"
@@ -41,46 +96,36 @@
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/dniText"
+                android:id="@+id/et_dni"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:inputType="textEmailAddress" />
 
-
-            <TextView
-                android:id="@+id/textView2"
+            <Button
+                android:id="@+id/btn_create_user"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginTop="15dp"
-                android:baselineAligned="false"
-                android:text="Fecha Entrada:"
-                android:textSize="20sp" />
+                android:layout_height="wrap_content"
+                android:text="Crear Usuario"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"/>
 
+
+
+            <!--TODO deprecated views-->
             <EditText
                 android:id="@+id/fechaEntradaText"
                 android:layout_width="fill_parent"
                 android:layout_height="48dp"
-                android:inputType="phone" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="15dp"
-                android:baselineAligned="false"
-                android:text="Fecha Salida"
-                android:textSize="20sp" />
+                android:inputType="phone"
+                android:visibility="gone"/>
 
             <EditText
                 android:id="@+id/fechaSalidaText"
                 android:layout_width="fill_parent"
                 android:layout_height="48dp"
-                android:inputType="phone" />
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" />
+                android:inputType="phone"
+                android:visibility="gone"/>
+
             <Button
                 android:id="@+id/recordButton"
                 android:layout_width="match_parent"
@@ -92,7 +137,7 @@
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="5"
-                />
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/readButton"
@@ -104,7 +149,8 @@
                 android:shadowDy="0"
                 android:shadowRadius="5"
                 android:text="@string/btn_read_tag"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:visibility="gone"/>
         </LinearLayout>
 
     </ScrollView>
