@@ -6,6 +6,7 @@ import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.romellfudi.fudinfc.app.BuildConfig
+import java.util.*
 
 class UserRepository(context: Context) {
 
@@ -70,16 +71,53 @@ class UserRepository(context: Context) {
     //endregion
 
     //region Log table
-    fun insertLog(log: NfcEntryLog) {
-        TODO("implement")
+    var entryLogList: List<NfcEntryLog>
+        get() {
+            val json = preferences!!.getString(KEY_ENTRY_LOG_TABLE, "") ?: ""
+            return if(json.isBlank()) {
+                listOf<NfcEntryLog>()
+            } else {
+                //Try to deserialize user list json
+                try {
+                    val list: List<NfcEntryLog> = Gson().fromJson(json, object : TypeToken<List<NfcEntryLog>>() {}.type)
+                    list
+                } catch (e: Exception) {
+                    Log.e(TAG, e.toString())
+                    listOf<NfcEntryLog>()
+                }
+            }
+        }
+        set(value) {
+            val json = Gson().toJson(value, object : TypeToken<List<NfcEntryLog>>() {}.type)
+            val editPrefs = preferences!!.edit()
+            editPrefs.putString(KEY_ENTRY_LOG_TABLE, json)
+            editPrefs.commit()
+        }
+
+
+    fun insertLog(nfcId: String, type: EntryType) {
+        //TODO careful timestamp is working in GMT, should work with UTC which is more consistent
+        val timestamp = Calendar.getInstance().time.time
+        insertLog(NfcEntryLog(nfcId, timestamp, type))
+    }
+
+    fun insertLog(item: NfcEntryLog) {
+        val list = entryLogList.toMutableList()
+        list.add(item)
+        entryLogList = list
     }
 
     fun getAllLogsByUser(nfcId: String): List<NfcEntryLog> {
         TODO("implement")
     }
 
+    fun getLastLog(): NfcEntryLog? {
+        val list = entryLogList.toMutableList()
+        return list.maxBy { it.timestamp }
+    }
+
     fun getAllLogs(): List<NfcEntryLog> {
-        TODO("implement")
+        return entryLogList
     }
     //endregion
 }

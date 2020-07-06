@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.romellfudi.fudinfc.app.data.EntryType;
+import com.romellfudi.fudinfc.app.data.NfcEntryLog;
 import com.romellfudi.fudinfc.app.data.NfcUser;
 import com.romellfudi.fudinfc.app.data.UserRepository;
 
@@ -48,6 +50,7 @@ public class MainActivityV2 extends AppCompatActivity {
     private Button btnCreateUser = null;
     private EditText etNfcId = null;
     private Button btnSimulateNfc = null;
+    private TextView tvLastLogValue = null;
 
     private String lastNfcId = "";
 
@@ -57,6 +60,8 @@ public class MainActivityV2 extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         bindViews();
         setListeners();
+
+        paintLastLog();
     }
 
     @Override
@@ -99,6 +104,7 @@ public class MainActivityV2 extends AppCompatActivity {
         btnCreateUser = findViewById(R.id.btn_create_user);
         etNfcId = findViewById(R.id.et_nfc_id);
         btnSimulateNfc = findViewById(R.id.btn_simulate_nfc);
+        tvLastLogValue = findViewById(R.id.tv_last_log_value);
     }
 
     private void setListeners() {
@@ -146,18 +152,32 @@ public class MainActivityV2 extends AppCompatActivity {
         UserRepository repository = new UserRepository(this);
         NfcUser user = repository.getUserById(nfcId);
         if(user == null) {
-            showPopupMsg("TODO implement");
+            showPopupMsg("Usuario no creado, introduzca el DNI, cree el usuario y vuelva a escanear el NFC");
             //End execution early
             return;
         }
 
         //User is already created... Create NfcEntryLog...
-
+        //TODO should control if user doesn't have last Entry.IN don't allow Entry.OUT?? and viceversa? to ensure pairing IN <-> OUT....
+        EntryType type = null;
+        if(rgType.getCheckedRadioButtonId() == R.id.rb_entrada) {
+            type = EntryType.IN;
+        } else if(rgType.getCheckedRadioButtonId() == R.id.rb_salida) {
+            type = EntryType.OUT;
+        } else {
+            throw new IllegalStateException("Expected to always have a checked radio button...");
+        }
+        repository.insertLog(nfcId, type);
+        paintLastLog();
     }
 
-    private boolean validateForm() {
-
-        return false;
+    private void paintLastLog() {
+        NfcEntryLog lastLog = new UserRepository(this).getLastLog();
+        if(lastLog != null) {
+            tvLastLogValue.setText(lastLog.getPrettyPrint());
+        } else {
+            tvLastLogValue.setText("...");
+        }
     }
 
     private void showPopupMsg(String msg) {
