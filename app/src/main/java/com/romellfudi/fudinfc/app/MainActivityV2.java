@@ -13,6 +13,7 @@ import android.nfc.tech.NfcB;
 import android.nfc.tech.NfcF;
 import android.nfc.tech.NfcV;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.romellfudi.fudinfc.app.data.NfcUser;
 import com.romellfudi.fudinfc.app.data.UserRepository;
 
 public class MainActivityV2 extends AppCompatActivity {
@@ -44,12 +46,17 @@ public class MainActivityV2 extends AppCompatActivity {
     private RadioButton rbSalida = null;
     private EditText etDni = null;
     private Button btnCreateUser = null;
+    private EditText etNfcId = null;
+    private Button btnSimulateNfc = null;
+
+    private String lastNfcId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bindViews();
+        setListeners();
     }
 
     @Override
@@ -80,10 +87,7 @@ public class MainActivityV2 extends AppCompatActivity {
         if (intent.getAction().equals(NfcAdapter.ACTION_TAG_DISCOVERED)) {
             String id = "NFC Tag\n" + ByteArrayToHexString(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID));
             Toast.makeText(this, id, Toast.LENGTH_LONG).show();
-
-            //TODO findUser()
-            //  if user null -> msg to create user with dni+
-            //  else -> insertLog()...
+            onNfcScan(id);
         }
     }
 
@@ -93,11 +97,71 @@ public class MainActivityV2 extends AppCompatActivity {
         rbSalida = findViewById(R.id.rb_salida);
         etDni = findViewById(R.id.et_dni);
         btnCreateUser = findViewById(R.id.btn_create_user);
+        etNfcId = findViewById(R.id.et_nfc_id);
+        btnSimulateNfc = findViewById(R.id.btn_simulate_nfc);
+    }
+
+    private void setListeners() {
+        btnSimulateNfc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nfcId = etNfcId.getText().toString().trim();
+                if(!nfcId.isEmpty()) {
+                    etNfcId.setText("");
+                    onNfcScan(nfcId);
+                } else {
+                    showPopupMsg("Introduzca dato para simular tickada con nfc...");
+                }
+            }
+        });
+
+        btnCreateUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!lastNfcId.trim().isEmpty()) {
+                    String dni = etDni.getText().toString().trim();
+                    if(Utils.isValidDni(dni)) {
+                        UserRepository repository = new UserRepository(MainActivityV2.this);
+                        NfcUser user = new NfcUser(lastNfcId, dni);
+                        repository.replaceUser(user);
+
+                        lastNfcId = "";
+                        etDni.setText("");
+                        showPopupMsg("Usuario creado correctamente, vuelva a acercar el NFC para fichar entrada / salida");
+                    } else {
+                        showPopupMsg("El dni introducido no tiene un formato válido, reviselo");
+                    }
+                } else {
+                    showPopupMsg("No se ha encontrado un tarjeta Nfc, escanee una e introduzca el Dni para crear el usuario");
+                }
+            }
+        });
+    }
+
+    /*
+    * IMPORTANT method
+    * */
+    private void onNfcScan(String nfcId) {
+        lastNfcId = nfcId;
+        UserRepository repository = new UserRepository(this);
+        NfcUser user = repository.getUserById(nfcId);
+        if(user == null) {
+            showPopupMsg("TODO implement");
+            //End execution early
+            return;
+        }
+
+        //User is already created... Create NfcEntryLog...
+
     }
 
     private boolean validateForm() {
 
         return false;
+    }
+
+    private void showPopupMsg(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
     private String ByteArrayToHexString(byte [] inarray) {

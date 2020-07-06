@@ -65,8 +65,7 @@ class UserRepository(context: Context) {
     }
 
     fun getUserById(idNfc: String): NfcUser? {
-        TODO("implement")
-        return null
+        return userList.find { it.nfcId == idNfc }
     }
     //endregion
 

@@ -116,6 +116,21 @@
                 </RadioGroup>
             </LinearLayout>
 
+            <EditText
+                android:id="@+id/et_nfc_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/btn_simulate_nfc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Simular NFC"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                style="@style/default_btn"/>
+
             <TextView
                 android:id="@+id/tv_last_log_label"
                 android:layout_width="wrap_content"
@@ -144,18 +159,19 @@
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="118dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="16dp"
                 android:baselineAligned="false"
                 android:text="Dni:"
+                android:textColor="@color/black"
                 android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/et_dni"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:inputType="textEmailAddress" />
+                android:layout_height="wrap_content"
+                android:inputType="text" />
 
             <Button
                 android:id="@+id/btn_create_user"

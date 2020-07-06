@@ -8,6 +8,9 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/fudi-nfc/com.romellfudi.fudinfc-fudi-nfc.iml" filepath="$PROJECT_DIR$/.idea/modules/fudi-nfc/com.romellfudi.fudinfc-fudi-nfc.iml" group="FudiNFC-master/fudi-nfc" />
       <module fileurl="file://$PROJECT_DIR$/fudi-nfc/fudi-nfc.iml" filepath="$PROJECT_DIR$/fudi-nfc/fudi-nfc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/norberto-nfc.iml" filepath="$PROJECT_DIR$/norberto-nfc.iml" group="norberto-nfc" />
+      <module fileurl="file://$PROJECT_DIR$/app/norberto-nfc-app.iml" filepath="$PROJECT_DIR$/app/norberto-nfc-app.iml" group="norberto-nfc/app" />
+      <module fileurl="file://$PROJECT_DIR$/fudi-nfc/norberto-nfc-fudi-nfc.iml" filepath="$PROJECT_DIR$/fudi-nfc/norberto-nfc-fudi-nfc.iml" group="norberto-nfc/fudi-nfc" />
     </modules>
   </component>
 </project>
